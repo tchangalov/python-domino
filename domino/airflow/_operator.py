@@ -36,6 +36,7 @@ class DominoOperator(BaseOperator):
         command: List[str],
         host: Optional[str] = None,
         api_key: Optional[str] = None,
+        auth_token: Optional[str] = None,
         domino_token_file: Optional[str] = None,
         isDirect: bool = None,
         commitId: Optional[str] = None,
@@ -53,6 +54,7 @@ class DominoOperator(BaseOperator):
 
         self.project = project
         self._api_key = api_key
+        self._auth_token = auth_token
         self._host = host
         self._domino_token_file = domino_token_file
         self.command = command
@@ -73,7 +75,8 @@ class DominoOperator(BaseOperator):
 
         self.log.info("Initializing Client...")
         self.client = Domino(
-            self.project, self._api_key, self._host, self._domino_token_file
+            self.project, api_key=self._api_key, host=self._host,
+            domino_token_file=self._domino_token_file, auth_token=self._auth_token
         )
         self.log.info("Client Initialized for project: %s", self.project)
 
